@@ -1,0 +1,270 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform",
+    "fileSet": "cr:fileSet",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "equivalentProperty": "cr:equivalentProperty",
+    "samplingRate": "cr:samplingRate"
+  },
+  "@type": "sc:Dataset",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "name": "prompsit-d2-locale-data-integrity",
+  "description": "Numbers and dates can be written differently across languages and regions. For example, the English decimal number 12.5 is written as 12,5 in French. This dataset checks whether a translation uses an accepted format for the requested language and region. Each example adds one number, date, currency amount or measurement in square brackets to a sentence from software translation catalogs. Expected formats come from Unicode CLDR, a collection of language and regional conventions. The check covers the bracketed value only. Amounts and units stay the same; currency and measurement conversions are outside the task.",
+  "version": "1.1",
+  "datePublished": "2026-06-22",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "url": "https://mozilladatacollective.com/",
+  "citeAs": "Prompsit D2 - Locale-data Integrity (v1.1, 2026).",
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "dev.jsonl",
+      "name": "dev.jsonl",
+      "description": "Open dev split: records with references.",
+      "contentUrl": "data/dev.jsonl",
+      "encodingFormat": "application/jsonlines",
+      "sha256": "6e3b49ca59f2293bc35161fa3e5f940df5cab3d60a2b8412192ba996eb88e517"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "test.input.jsonl",
+      "name": "test.input.jsonl",
+      "description": "Test split: inputs only (references withheld).",
+      "contentUrl": "data/test.input.jsonl",
+      "encodingFormat": "application/jsonlines",
+      "sha256": "7ccca51abd684e798d9c565beaf1311aae98dc16ef2949809cb661d528b8a80b"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "contrastive.dev.jsonl",
+      "name": "contrastive.dev.jsonl",
+      "description": "Validator-verified contrastive minimal pairs (dev).",
+      "contentUrl": "data/contrastive.dev.jsonl",
+      "encodingFormat": "application/jsonlines",
+      "sha256": "1a2d6880c2e53174cae26ebf4bf0995af2f179ccd0d80a569d201f551d8b35d9"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "dev",
+      "name": "dev",
+      "description": "Dev records (one per source x target locale).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "dev/item_id",
+          "name": "item_id",
+          "description": "Stable item id; shared by all 9 locale rows.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "dev.jsonl"
+            },
+            "extract": {
+              "column": "item_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "dev/source_locale",
+          "name": "source_locale",
+          "description": "Source locale (en-US).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "dev.jsonl"
+            },
+            "extract": {
+              "column": "source_locale"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "dev/target_locale",
+          "name": "target_locale",
+          "description": "Target locale (es-ES, fr-FR, ...).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "dev.jsonl"
+            },
+            "extract": {
+              "column": "target_locale"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "dev/source",
+          "name": "source",
+          "description": "EN carrier sentence; entity in the [...] slot, en-US form.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "dev.jsonl"
+            },
+            "extract": {
+              "column": "source"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "dev/reference",
+          "name": "reference",
+          "description": "Carrier translation; entity localized (dev only).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "dev.jsonl"
+            },
+            "extract": {
+              "column": "reference"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "dev/split",
+          "name": "split",
+          "description": "dev / test / hidden.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "dev.jsonl"
+            },
+            "extract": {
+              "column": "split"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "cr:RecordSet",
+      "@id": "test_inputs",
+      "name": "test_inputs",
+      "description": "Test inputs (no reference).",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "test_inputs/item_id",
+          "name": "item_id",
+          "description": "Stable item id; shared by all 9 locale rows.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "test.input.jsonl"
+            },
+            "extract": {
+              "column": "item_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "test_inputs/source_locale",
+          "name": "source_locale",
+          "description": "Source locale (en-US).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "test.input.jsonl"
+            },
+            "extract": {
+              "column": "source_locale"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "test_inputs/target_locale",
+          "name": "target_locale",
+          "description": "Target locale (es-ES, fr-FR, ...).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "test.input.jsonl"
+            },
+            "extract": {
+              "column": "target_locale"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "test_inputs/source",
+          "name": "source",
+          "description": "EN carrier sentence; entity in the [...] slot, en-US form.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "test.input.jsonl"
+            },
+            "extract": {
+              "column": "source"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "test_inputs/split",
+          "name": "split",
+          "description": "dev / test / hidden.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "test.input.jsonl"
+            },
+            "extract": {
+              "column": "split"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+# MDC submission metadata (dry-run ready). Archive = open layer only
+# (dev references + test inputs + contrastive). Hidden split and
+# withheld test references are never uploaded.
+file_path: open-v1.1.tar.gz
+datasheet_path: DATASHEET.md
+
+name: Prompsit D2 - Locale-data Integrity
+shortDescription: >-
+  Checks number, date, currency and unit formatting in machine translation for nine
+  regional language settings.
+
+longDescription: >-
+  Numbers and dates can be written differently across languages and regions. For
+  example, the English decimal number 12.5 is written as 12,5 in French. This dataset
+  checks whether a translation uses an accepted format for the requested language and
+  region.
+
+  Each example adds one number, date, currency amount or measurement in square brackets
+  to a sentence from software translation catalogs. Expected formats come from Unicode
+  CLDR, a collection of language and regional conventions. The check covers the
+  bracketed value only. Amounts and units stay the same; currency and measurement
+  conversions are outside the task.
+
+  Translations are from English into Catalan, Spanish, French, Italian, European
+  Portuguese, German, Dutch, Polish and Russian. The full dataset contains 680 source
+  examples and 6,120 records, including withheld data.
+
+  The download includes a small development set with reference translations for trying
+  out the checks, test inputs without their reference answers, and example pairs showing a reference alongside a deliberately damaged version. Some evaluation data is withheld. See DATASHEET.md for
+  the scoring rules, sources and limitations.
+
+locale: mul
+task: MT
+format: JSONL
+licenseAbbreviation: CC_BY_4_0
+showContactInfo: true
+visibility: PUBLIC
+
+restrictions: Test-split reference labels withheld; hidden split not distributed.
+forbiddenUsage: >
+  No additional legal restriction beyond CC-BY-4.0. For benchmark integrity,
+  disclose any training or tuning on the open test inputs and do not report such
+  runs as uncontaminated official benchmark results.
+additionalConditions: >
+  Preserve the included attribution notices; cite the dataset and upstream
+  projects when used in publications.
+
+pointOfContactFullName: Prompsit Language Engineering
+pointOfContactEmail: info@prompsit.com
+
+fundedByFullName: Prompsit Language Engineering
+fundedByEmail: info@prompsit.com
+
+legalContactFullName: Prompsit Language Engineering
+legalContactEmail: info@prompsit.com
+
+createdByFullName: Prompsit Language Engineering
+createdByEmail: info@prompsit.com
+
+intendedUsage: >-
+  Test whether translation tools format numbers, dates, currencies and units for the
+  requested language and region. The tool must keep the bracketed value in its output.
+
+ethicalReviewProcess: >-
+  The examples use software translation catalogs with licenses that allow reuse and
+  Unicode CLDR language data. Generated additions are documented, and source credits are
+  included. Reference examples are checked automatically; an independent human review of
+  the complete dataset has not been conducted.
+
+# True = dataset is non-exclusive to MDC; False = exclusively hosted on MDC.
+exclusivityOptOut: true
+
+# Must be true to actually submit. Keep true so dry-run mirrors the live call.
+agreeToSubmit: true

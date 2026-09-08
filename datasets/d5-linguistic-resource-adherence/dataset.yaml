@@ -1,0 +1,74 @@
+# MDC submission metadata. Archive = open layer only
+# (dev reference + test inputs + contrastive). Hidden split is never uploaded.
+file_path: open-v1.1.tar.gz
+datasheet_path: DATASHEET.md
+
+name: Prompsit D5 - Linguistic-resource Adherence
+shortDescription: >-
+  Checks whether translations use prescribed terms supplied through a glossary or
+  translation memory.
+
+longDescription: >-
+  Translation workflows may receive a glossary of required terms or a translation
+  memory: previously translated sentences provided for reuse. This dataset checks
+  whether the output uses the prescribed term, repeats it when required, and avoids
+  terms explicitly listed as disallowed.
+
+  The examples combine software translation sentences with added term fields and
+  constructed glossary or translation-memory examples. Some cases include an outdated
+  suggested term or conflicting instructions. Glossary and translation-memory results
+  are reported separately. The checks assess term use, not reuse of an entire sentence
+  or overall translation quality.
+
+  Translations are from English into Catalan, Spanish, French, Italian, European
+  Portuguese, German, Dutch, Polish and Russian. The full dataset contains 510 source
+  examples and 4,590 records, including withheld data.
+
+  The download includes a small development set with reference translations for trying
+  out the checks, test inputs without their reference answers, and example pairs showing a reference alongside a deliberately damaged version. Some evaluation data is withheld. See DATASHEET.md for
+  the scoring rules, sources and limitations.
+
+locale: mul
+task: MT
+format: JSONL
+licenseAbbreviation: CC_BY_4_0
+showContactInfo: true
+visibility: PUBLIC
+
+restrictions: Test-split reference labels withheld; hidden split not distributed.
+forbiddenUsage: >
+  No additional legal restriction beyond CC-BY-4.0. For benchmark integrity,
+  disclose any training or tuning on the open test inputs and do not report such
+  runs as uncontaminated official benchmark results.
+additionalConditions: >
+  Preserve the included attribution notices; cite the dataset and upstream
+  projects when used in publications.
+
+pointOfContactFullName: Prompsit Language Engineering
+pointOfContactEmail: info@prompsit.com
+
+fundedByFullName: Prompsit Language Engineering
+fundedByEmail: info@prompsit.com
+
+legalContactFullName: Prompsit Language Engineering
+legalContactEmail: info@prompsit.com
+
+createdByFullName: Prompsit Language Engineering
+createdByEmail: info@prompsit.com
+
+intendedUsage: >-
+  Test translation workflows that can receive a glossary or translation memory. Report
+  the two types of result separately, and identify any resource type the workflow does
+  not support.
+
+ethicalReviewProcess: >-
+  The examples use software translation catalogs with licenses that allow reuse and
+  Unicode CLDR language data. Generated additions are documented, and source credits are
+  included. Reference examples are checked automatically; an independent human review of
+  the complete dataset has not been conducted.
+
+# True = dataset is non-exclusive to MDC; False = exclusively hosted on MDC.
+exclusivityOptOut: true
+
+# Must be true to actually submit. Keep true so dry-run mirrors the live call.
+agreeToSubmit: true

@@ -1,0 +1,71 @@
+# MDC submission metadata (dry-run ready). Archive = open layer only
+# (dev references + test inputs + contrastive). Hidden split and
+# withheld test references are never uploaded.
+file_path: open-v1.1.tar.gz
+datasheet_path: DATASHEET.md
+
+name: Prompsit D1 - Inline Asset Integrity
+shortDescription: >-
+  Checks whether machine translation keeps tags, placeholders and protected text intact.
+
+longDescription: >-
+  Software text often contains more than words. It may include tags that mark bold text,
+  placeholders such as {name}, or a web address that must stay unchanged. This dataset
+  checks whether a translation preserves the supported elements and their syntax.
+
+  The examples come from software translation catalogs, with some markup added to cover
+  more cases. The checks can detect missing or damaged elements. They do not determine
+  whether every tag surrounds the right words or whether the translation itself is
+  accurate.
+
+  Translations are from English into Catalan, Spanish, French, Italian, European
+  Portuguese, German, Dutch, Polish and Russian. The full dataset contains 599 source
+  examples and 5,391 records, including withheld data.
+
+  The download includes a small development set with reference translations for trying
+  out the checks, test inputs without their reference answers, and example pairs showing a reference alongside a deliberately damaged version. Some evaluation data is withheld. See DATASHEET.md for
+  the scoring rules, sources and limitations.
+
+locale: mul
+task: MT
+format: JSONL
+licenseAbbreviation: CC_BY_4_0
+showContactInfo: true
+visibility: PUBLIC
+
+restrictions: Test-split reference labels withheld; hidden split not distributed.
+forbiddenUsage: >
+  No additional legal restriction beyond CC-BY-4.0. For benchmark integrity,
+  disclose any training or tuning on the open test inputs and do not report such
+  runs as uncontaminated official benchmark results.
+additionalConditions: >
+  Preserve the included attribution notices; cite the dataset and upstream
+  projects when used in publications.
+
+pointOfContactFullName: Prompsit Language Engineering
+pointOfContactEmail: info@prompsit.com
+
+fundedByFullName: Prompsit Language Engineering
+fundedByEmail: info@prompsit.com
+
+legalContactFullName: Prompsit Language Engineering
+legalContactEmail: info@prompsit.com
+
+createdByFullName: Prompsit Language Engineering
+createdByEmail: info@prompsit.com
+
+intendedUsage: >-
+  Test translation tools used for software and other text containing tags or
+  placeholders. Use the results alongside a separate assessment of translation quality.
+
+ethicalReviewProcess: >-
+  The examples use software translation catalogs with licenses that allow reuse.
+  Generated additions are documented, and source credits are included. Reference
+  examples are checked automatically; an independent human review of the complete
+  dataset has not been conducted.
+
+# True = dataset is non-exclusive to MDC; False = exclusively hosted on MDC.
+exclusivityOptOut: true
+
+# Must be true to actually submit. Keep true so dry-run mirrors the live call.
+agreeToSubmit: true

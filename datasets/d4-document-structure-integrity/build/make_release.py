@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""Package the OPEN layer + write checksums (reproducibility / MDC upload).
+
+Open layer = dev.jsonl (full references) + test.input.jsonl (references withheld) +
+contrastive.dev.jsonl + manifest.json + croissant.json + DATASHEET.md +
+README.md + THIRD_PARTY_NOTICES.md. The hidden split (private/) and the test
+references are NEVER packaged. Output:
+  - open-v<version>.tar.gz   (referenced by dataset.yaml; git-ignored)
+  - checksums.sha256         (over the published files)
+Deterministic; run after validate.py. ASCII-only.
+"""
+from __future__ import annotations
+
+import gzip
+import hashlib
+import io
+import json
+import tarfile
+import build_croissant
+from pathlib import Path
+
+PKG = Path(__file__).resolve().parent.parent
+OPEN_FILES = ["data/dev.jsonl", "data/test.input.jsonl", "data/contrastive.dev.jsonl",
+              "manifest.json", "croissant.json", "DATASHEET.md", "README.md",
+              "THIRD_PARTY_NOTICES.md"]
+
+
+def _lf_bytes(path: Path) -> bytes:
+    """Normalize text payloads to LF for reproducible archives on Windows."""
+    return path.read_bytes().replace(b"\r\n", b"\n")
+
+
+def main():
+    man = json.loads((PKG / "manifest.json").read_text(encoding="utf-8"))
+    version = man["version"]
+    present = [f for f in OPEN_FILES if (PKG / f).exists()]
+
+    croissant_path = build_croissant.build()
+    build_croissant.validate(croissant_path)
+
+    lines = []
+    for rel in sorted(present):
+        h = hashlib.sha256(_lf_bytes(PKG / rel)).hexdigest()
+        lines.append("%s  %s" % (h, rel))
+    (PKG / "checksums.sha256").write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+
+    archive = PKG / ("open-v%s.tar.gz" % version)
+    with archive.open("wb") as raw, gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=1750000000, compresslevel=9) as gz, tarfile.open(fileobj=gz, mode="w") as tar:
+        for rel in sorted(present + ["checksums.sha256"]):
+            info = tar.gettarinfo(str(PKG / rel), arcname=rel)
+            info.mtime = 1750000000
+            info.mode = 0o644
+            info.uid = info.gid = 0
+            info.uname = info.gname = ""
+            data = _lf_bytes(PKG / rel)
+            info.size = len(data)
+            tar.addfile(info, io.BytesIO(data))
+    size_kb = archive.stat().st_size / 1024
+    print(json.dumps({"archive": archive.name, "size_kb": round(size_kb, 1),
+                      "files": present, "checksums": "checksums.sha256"}, indent=2))
+
+
+if __name__ == "__main__":
+    main()
